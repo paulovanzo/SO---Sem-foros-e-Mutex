@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,13 +38,13 @@ void MainWindow::updateInterface(int id, int x, int y){
     case 2: //Atualiza a posição do objeto da tela (quadrado) que representa o trem2
         ui->label_trem2->setGeometry(x,y,20,20);
         break;
-    case 3: //Atualiza a posição do objeto da tela (quadrado) que representa o trem2
+    case 3: //Atualiza a posição do objeto da tela (quadrado) que representa o trem3
         ui->label_trem3->setGeometry(x,y,20,20);
         break;
-    case 4: //Atualiza a posição do objeto da tela (quadrado) que representa o trem2
+    case 4: //Atualiza a posição do objeto da tela (quadrado) que representa o trem4
         ui->label_trem4->setGeometry(x,y,20,20);
         break;
-    case 5: //Atualiza a posição do objeto da tela (quadrado) que representa o trem2
+    case 5: //Atualiza a posição do objeto da tela (quadrado) que representa o trem5
         ui->label_trem5->setGeometry(x,y,20,20);
         break;
     default:
@@ -63,20 +62,11 @@ MainWindow::~MainWindow()
  */
 void MainWindow::on_pushButton_clicked()
 {
-    slider_velocidade();
     trem1->start();
     trem2->start();
     trem3->start();
     trem4->start();
     trem5->start();
-}
-
-void MainWindow::slider_velocidade(){
-    std::cout << (ui->Velo1->tickInterval()) << std::endl;
-    std::cout << (ui->Velo2->tickInterval()) << std::endl;
-    std::cout << (ui->Velo3->tickInterval()) << std::endl;
-    std::cout << (ui->Velo4->tickInterval()) << std::endl;
-    std::cout << (ui->Velo5->tickInterval()) << std::endl;
 }
 /*
  * Ao clicar, trens param execução
@@ -88,4 +78,29 @@ void MainWindow::on_pushButton_2_clicked()
     trem3->terminate();
     trem4->terminate();
     trem5->terminate();
+}
+
+void MainWindow::on_Velo1_valueChanged(int value)
+{
+    trem1->setVel(200-value);
+}
+
+void MainWindow::on_Velo2_valueChanged(int value)
+{
+    trem2->setVel(200-value);
+}
+
+void MainWindow::on_Velo3_valueChanged(int value)
+{
+    trem3->setVel(200-value);
+}
+
+void MainWindow::on_Velo4_valueChanged(int value)
+{
+    trem4->setVel(200-value);
+}
+
+void MainWindow::on_Velo5_valueChanged(int value)
+{
+    trem5->setVel(200-value);
 }

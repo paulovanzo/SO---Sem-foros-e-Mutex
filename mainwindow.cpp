@@ -82,25 +82,25 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_Velo1_valueChanged(int value)
 {
-    trem1->setVel(200-value);
+    trem1->setVel(100-value);
 }
 
 void MainWindow::on_Velo2_valueChanged(int value)
 {
-    trem2->setVel(200-value);
+    trem2->setVel(100-value);
 }
 
 void MainWindow::on_Velo3_valueChanged(int value)
 {
-    trem3->setVel(200-value);
+    trem3->setVel(100-value);
 }
 
 void MainWindow::on_Velo4_valueChanged(int value)
 {
-    trem4->setVel(200-value);
+    trem4->setVel(100-value);
 }
 
 void MainWindow::on_Velo5_valueChanged(int value)
 {
-    trem5->setVel(200-value);
+    trem5->setVel(100-value);
 }

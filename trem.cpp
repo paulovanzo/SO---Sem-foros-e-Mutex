@@ -1,5 +1,4 @@
 #include "trem.h"
-#include "semaphore.h"
 #include <QtCore>
 
 sem_t site1,site2,site3,site4,site5,site6,site7;
@@ -9,6 +8,14 @@ Trem::Trem(int ID, int x, int y){
     this->x = x;
     this->y = y;
     this->velocidade = 100;
+
+    sem_init(&site1,0,0);
+    sem_init(&site2,0,0);
+    sem_init(&site3,0,0);
+    sem_init(&site4,0,1);
+    sem_init(&site5,0,0);
+    sem_init(&site6,0,1);
+    sem_init(&site7,0,0);
 }
 
 void Trem::setVel(int val){
@@ -17,13 +24,6 @@ void Trem::setVel(int val){
 
 //Função a ser executada após executar trem->START
 void Trem::run(){
-    sem_init(&site1,0,1);
-    sem_init(&site2,0,1);
-    sem_init(&site3,0,0);
-    sem_init(&site4,0,1);
-    sem_init(&site5,0,0);
-    sem_init(&site6,0,1);
-    sem_init(&site7,0,1);
     while(true){
         switch(ID){
         case 1:     //Trem 1
@@ -56,24 +56,22 @@ void Trem::run(){
                     sem_post(&site1);
                 }
                 if(x == 580){
+                    sem_wait(&site5);
                     sem_wait(&site2);
                 }
                 x+=10;
             }else if (x == 600 && y < 140){
-                if(y == 120){
-                    sem_wait(&site5);
-                }
                 y+=10;
             }else if (x > 330 && y == 140){
                 if(x == 600){
                     sem_post(&site2);
                 }
                 if(x == 500){
-                    sem_wait(&site4);
-                    sem_post(&site5);
-                }
-                if( x == 350){
                     sem_wait(&site1);
+                    sem_wait(&site4);
+                }
+                if(x == 460){
+                    sem_post(&site5);
                 }
                 x-=10;
             }else{
@@ -86,12 +84,18 @@ void Trem::run(){
             break;
         case 3: //Trem 3
             if (y == 20 && x < 870){
+                if(x == 600){
+                    sem_post(&site2);
+                }
                 x+=10;
             }else if (x == 870 && y < 140){
                 y+=10;
             }else if (x > 600 && y == 140){
                 if(x == 770){
                     sem_wait(&site6);
+                }
+                if(x == 620){
+                    sem_wait(&site2);
                 }
                 x-=10;
             }else{
@@ -115,7 +119,7 @@ void Trem::run(){
                 }
                 x+=10;
             }else if (x == 480 && y < 260){
-                if(y == 150){
+                if(y == 160){
                     sem_post(&site4);
                 }
                 y+=10;
@@ -140,24 +144,22 @@ void Trem::run(){
                 if(x == 580){
                     sem_wait(&site6);
                 }
-                if(x == 600){
+                if(x == 620){
                     sem_post(&site5);
                 }
                 x+=10;
             }else if (x == 750 && y < 260){
-                if(y == 280){
+                if(y == 240){
                     sem_post(&site6);
                 }
                 y+=10;
             }else if (x > 480 && y == 260){
                 if(x == 500){
+                    sem_wait(&site5);
                     sem_wait(&site7);
                 }
                 x-=10;
             }else{
-                if(y == 120){
-                    sem_wait(&site5);
-                }
                 y-=10;
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
